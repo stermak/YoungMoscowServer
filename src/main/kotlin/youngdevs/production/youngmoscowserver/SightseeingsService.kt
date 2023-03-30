@@ -16,7 +16,7 @@ class SightseeingsService(private val sightseeingsRepository: SightseeingsReposi
             val file = File(filePath)
             val lines = file.readLines()
             for (line in lines) {
-                val parts = line.split(',')
+                val parts = line.split('|')
                 if (parts.size == 5) {
                     val id = parts[0].toLongOrNull()
                     val name = parts[1]

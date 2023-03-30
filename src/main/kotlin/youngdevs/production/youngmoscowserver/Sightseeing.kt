@@ -1,5 +1,6 @@
 package youngdevs.production.youngmoscowserver
 
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -11,6 +12,7 @@ data class Sightseeing(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     val name: String = "",
+    @Column(length = 1000)
     val description: String = "",
     val address: String = "",
     val image: String = ""
