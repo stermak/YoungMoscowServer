@@ -39,3 +39,12 @@ tasks.withType(KotlinCompile) {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Настройка задачи сборки JAR
+task buildJar(type: Jar) {
+    archiveFileName = "young_moscow.jar"
+    from sourceSets.main.output
+}
+
+// Добавление задачи сборки JAR в список задач сборки
+build.dependsOn(buildJar)
