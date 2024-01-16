@@ -1,5 +1,6 @@
 package youngdevs.production.youngmoscowserver
 
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.InputStreamResource
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -14,12 +15,20 @@ import java.io.FileInputStream
 @RequestMapping("/api/imagesEvents")
 class ImagesEventsController {
 
+    private val logger = LoggerFactory.getLogger(ImagesController::class.java)
     private val imagesDirectory = File("events")
 
     @GetMapping("/{imageName}")
     fun getImage(@PathVariable imageName: String): ResponseEntity<InputStreamResource> {
+        logger.info("Request for image: $imageName")
         val imagePath = imagesDirectory.toPath().resolve(imageName.trim()) // Убедитесь, что нет пробелов перед именем файла
         val imageFile = imagePath.toFile()
+
+        if (!imageFile.exists()) {
+            logger.error("Image not found: $imageName")
+            return ResponseEntity.notFound().build()
+        }
+
         val inputStream = FileInputStream(imageFile)
 
         return ResponseEntity.ok()

@@ -1,11 +1,14 @@
 package youngdevs.production.youngmoscowserver
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileNotFoundException
 
 @Service
 class EventsService(private val eventsRepository: EventsRepository) {
+
+    private val logger = LoggerFactory.getLogger(SightseeingsService::class.java)
 
     suspend fun getEvents(): List<Event> {
         return eventsRepository.findAll()
@@ -30,8 +33,11 @@ class EventsService(private val eventsRepository: EventsRepository) {
                     }
                 }
             }
+            logger.info("Events loaded from file successfully")
         } catch (e: FileNotFoundException) {
-            println("File not found: $filePath")
+            logger.error("File not found: $filePath", e)
+        } catch (e: Exception) {
+            logger.error("Error loading events from file: ${e.message}", e)
         }
     }
 }
