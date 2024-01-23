@@ -25,3 +25,19 @@ class YoungMoscowServerApplication(private val sightseeingsService: Sightseeings
 fun main(args: Array<String>) {
     runApplication<YoungMoscowServerApplication>(*args)
 }
+
+//fun main(args: Array<String>) {
+//    runApplication<YoungMoscowServerApplication>(*args)
+        //}
+//fun main(args: Array<String>) {
+//    runApplication<YoungMoscowServerApplication>(*args)
+//}
+//fun main(args: Array<String>) {
+//    runApplication<YoungMoscowServerApplication>(*args)
+//}
+//fun main(args: Array<String>) {
+//    runApplication<YoungMoscowServerApplication>(*args)
+//}
+//fun main(args: Array<String>) {
+//    runApplication<YoungMoscowServerApplication>(*args)
+//}
