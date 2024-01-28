@@ -11,6 +11,11 @@ class EventsService(private val eventsRepository: EventsRepository) {
         return eventsRepository.findAll()
     }
 
+    fun countEventsWithLongDescription(minDescriptionLength: Int): Int {
+        val allEvents = eventsRepository.findAll()
+        return allEvents.count { it.description.length > minDescriptionLength }
+    }
+
     fun loadEventsFromFile(filePath: String) {
         try {
             val file = File(filePath)
