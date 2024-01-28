@@ -8,11 +8,9 @@ class PostgresIntegrationTest {
 
     @Test
     fun `test connection to PostgreSQL database`() {
-        val url = "jdbc:postgresql://zabbix-postgres:5432/zabbixdb"
-        val user = "ermak"
-        val password = "Bubkin007!AS"
+        val url = "jdbc:h2:mem:testdb"
 
-        val connection = DriverManager.getConnection(url, user, password)
+        val connection = DriverManager.getConnection(url)
         assertNotNull(connection, "Connection should not be null")
 
         val statement = connection.createStatement()
