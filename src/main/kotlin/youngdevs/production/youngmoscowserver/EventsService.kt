@@ -6,18 +6,24 @@ import java.io.File
 import java.io.FileNotFoundException
 
 @Service
-class EventsService(private val eventsRepository: EventsRepository) {
 
+interface FileReaderInterface {
+    fun readLines(filePath: String): List<String>
+}
+
+class EventsService(
+    private val eventsRepository: EventsRepository,
+    private val fileReader: FileReaderInterface
+) {
     private val logger = LoggerFactory.getLogger(SightseeingsService::class.java)
 
     suspend fun getEvents(): List<Event> {
         return eventsRepository.findAll()
     }
-
-    fun loadEventsFromFile(filePath: String) {
+    fun loadEventsFromFile(filePath: String): Int {
+        var loadedCount = 0
         try {
-            val file = File(filePath)
-            val lines = file.readLines()
+            val lines = fileReader.readLines(filePath)
             for (line in lines) {
                 val parts = line.split('|')
                 if (parts.size == 5) {
@@ -30,6 +36,7 @@ class EventsService(private val eventsRepository: EventsRepository) {
                     if (id != null) {
                         val event = Event(id, name, description, address, image)
                         eventsRepository.save(event)
+                        loadedCount++
                     }
                 }
             }
@@ -39,5 +46,6 @@ class EventsService(private val eventsRepository: EventsRepository) {
         } catch (e: Exception) {
             logger.error("Error loading events from file: ${e.message}", e)
         }
+        return loadedCount
     }
 }
