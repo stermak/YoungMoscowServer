@@ -1,14 +1,11 @@
 package youngdevs.production.youngmoscowserver
 
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileNotFoundException
 
 @Service
 class SightseeingsService(private val sightseeingsRepository: SightseeingsRepository) {
-
-    private val logger = LoggerFactory.getLogger(SightseeingsService::class.java)
 
     suspend fun getSightseeings(): List<Sightseeing> {
         return sightseeingsRepository.findAll()
@@ -33,12 +30,8 @@ class SightseeingsService(private val sightseeingsRepository: SightseeingsReposi
                     }
                 }
             }
-            logger.info("Sightseeings loaded from file successfully")
         } catch (e: FileNotFoundException) {
-            logger.error("File not found: $filePath", e)
-        } catch (e: Exception) {
-            logger.error("Error loading sightseeings from file: ${e.message}", e)
+            println("File not found: $filePath")
         }
     }
 }
-
